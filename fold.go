@@ -7,6 +7,7 @@ import (
 
 var (
 	ErrFoldr = errors.New("error applying foldr")
+	ErrFoldl = errors.New("error applying foldl")
 )
 
 // Applies a right fold over an array of type U, summing the results into the accumulator of type T by repeatedly applying
@@ -26,6 +27,25 @@ func FoldrE[T Summable, U any](acc T, f func(acc T, u U) (T, error), us []U) (T,
 			return acc, fmt.Errorf("%w: %w", ErrFoldr, err)
 		}
 		acc += v
+	}
+	return acc, nil
+}
+
+func Foldl[T Summable, U any](acc T, f func(acc T, u U) T, us []U) T {
+	for i := len(us) - 1; i >= 0; i-- {
+		acc += f(acc, us[i])
+	}
+	return acc
+}
+
+func FoldlE[T Summable, U any](acc T, f func(acc T, u U) (T, error), us []U) (T, error) {
+	for i := len(us) - 1; i >= 0; i-- {
+		v, err := f(acc, us[i])
+		if err != nil {
+			return acc, fmt.Errorf("%w: %w", ErrFoldl, err)
+		}
+		acc += v
+
 	}
 	return acc, nil
 }
