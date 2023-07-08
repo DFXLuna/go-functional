@@ -1,14 +1,11 @@
 package test
 
 import (
-	"errors"
 	"testing"
 
 	gofunctional "github.com/DFXLuna/go-functional"
 	"github.com/stretchr/testify/assert"
 )
-
-var ErrExpected = errors.New("error is expected")
 
 func TestFoldr(t *testing.T) {
 	assert := assert.New(t)
