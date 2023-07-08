@@ -39,7 +39,7 @@ func TestApplyE(t *testing.T) {
 
 	arr = []int{}
 	funcCalls = 0
-	gofunctional.ApplyE(arr, f)
+	err = gofunctional.ApplyE(arr, f)
 	assert.Nil(err, "should not error")
 	assert.Equal(len(arr), funcCalls, "f should get called 0 times")
 
